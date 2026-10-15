@@ -1,0 +1,46 @@
+[build]
+  command = "npm run build"
+  publish = "."
+  functions = "netlify/functions"
+
+[dev]
+  command = ""
+  targetPort = 8888
+  port = 8888
+  publish = "."
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/save-sample"
+  to = "/.netlify/functions/save-sample"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/api/list-samples"
+  to = "/.netlify/functions/list-samples"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/api/save-model"
+  to = "/.netlify/functions/save-model"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/api/get-model"
+  to = "/.netlify/functions/get-model"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self)"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#172554"><meta name="description" content="Teach a browser-based AI to recognize your own everyday objects.">
+  <title>My AI Object Recognizer</title><link rel="stylesheet" href="/src/style.css">
+  <script defer src="/src/app.js" type="module"></script>
+</head>
+<body>
+<header class="topbar"><div class="brand-mark" aria-hidden="true">✳</div><div><h1>My AI Object Recognizer</h1><p>Teach it with your own pictures</p></div><span id="model-badge" class="badge">Loading AI…</span></header>
+<main>
+  <section class="intro"><div><p class="eyebrow">YOUR PERSONAL OBJECT AI</p><h2>Teach it what matters to you.</h2><p>Add examples, train a model, then test it with a camera or image upload. The shared library is saved online.</p></div><div class="intro-icon" aria-hidden="true">◉</div></section>
+  <div id="global-message" class="notice" role="status" aria-live="polite">Starting up…</div>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">01 / RECOGNIZE</p><h2>Live recognition</h2></div><span class="muted">Camera or image</span></div>
+    <div class="recognition-grid"><div class="camera-box"><video id="camera-video" autoplay muted playsinline></video><canvas id="camera-canvas" hidden></canvas><div id="camera-placeholder" class="camera-placeholder"><span>◎</span><p>Camera preview will appear here</p></div></div>
+      <div class="recognition-controls"><div class="button-row"><button id="start-camera" class="button secondary">Start camera</button><button id="stop-camera" class="button ghost" disabled>Stop camera</button></div><button id="recognize-camera" class="button primary" disabled>Recognize object</button><label class="file-button">Upload an image<input id="predict-file" type="file" accept="image/jpeg,image/png,image/webp" hidden></label><div id="prediction" class="prediction-card"><span class="prediction-icon">✳</span><div><p class="muted">Prediction</p><h3 id="prediction-name">Ready when you are</h3><p id="prediction-confidence" class="muted">No image analyzed yet</p></div></div><p class="small-note">Confidence is the model's estimate, not a guarantee. Similar-looking objects may be confused.</p></div></div>
+  </section>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">02 / TEACH</p><h2>Teach the AI</h2></div><span class="muted">Use several different views</span></div>
+    <form id="sample-form"><label class="field-label" for="category-name">Object category name</label><input id="category-name" name="category" maxlength="40" placeholder="e.g. Bottle" required autocomplete="off"><p class="help">Use a short name (letters, numbers, spaces, hyphens). Choose a category from the library to add more examples to it.</p>
+      <div class="teach-grid"><div><h3>Capture from camera</h3><p class="muted">Start the camera above, then capture different angles.</p><button id="capture-sample" type="button" class="button secondary" disabled>Capture training image</button></div><div><h3>Or upload images</h3><label class="file-button">Choose multiple images<input id="sample-files" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden></label><p class="help">JPEG, PNG or WebP; up to 2 MB each, max 12 images per submission.</p></div></div>
+      <div id="staging-grid" class="staging-grid"><p class="empty-state">Your selected training images will appear here.</p></div><div class="form-footer"><span id="staging-count" class="muted">0 images selected</span><button id="save-samples" type="submit" class="button primary">Add training images</button></div>
+    </form>
+  </section>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">03 / TRAIN</p><h2>Training dashboard</h2></div><span id="training-state" class="badge">Not trained yet</span></div>
+    <div class="stats-grid"><div class="stat"><span>Categories</span><strong id="stat-categories">0</strong></div><div class="stat"><span>Saved images</span><strong id="stat-samples">0</strong></div><div class="stat"><span>Last successful training</span><strong id="stat-trained">—</strong></div></div>
+    <div class="progress-track"><div id="training-progress" class="progress-fill"></div></div><p id="training-message" class="muted" role="status">Add labeled examples before training.</p><button id="train-model" class="button primary">Retrain model from all saved images</button><p class="help">Training runs in your browser. Keep this tab open until it finishes. New model versions are only published after the browser finishes training and checks them.</p>
+  </section>
+  <section class="panel"><div class="section-heading"><div><p class="eyebrow">04 / LIBRARY</p><h2>Knowledge library</h2></div><button id="refresh-library" class="button ghost">Refresh</button></div><div id="library-grid" class="library-grid"><p class="empty-state">Loading saved categories…</p></div><p class="small-note">Everyone can add examples in this public first version. Category deletion is intentionally unavailable here to reduce accidental damage to shared knowledge.</p></section>
+  <footer><p>Built with TensorFlow.js, MobileNet and Netlify Blobs.</p><p>Public demo: do not upload private or sensitive images.</p></footer>
+</main>
+<dialog id="preview-dialog"><button id="close-preview" class="dialog-close" aria-label="Close preview">×</button><img id="preview-image" alt="Training example preview"><p id="preview-caption"></p></dialog>
+</body></html>
